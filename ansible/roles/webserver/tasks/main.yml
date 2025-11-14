@@ -1,0 +1,50 @@
+---
+# tasks file for webserver
+#
+- name: install apache y php
+  ansible.builtin.apt:
+    name: 
+      - apache2
+      - php
+      - libapache2-mod-php
+    state: present
+
+- name: download unzip
+  ansible.builtin.apt:
+    name: unzip
+    state: present
+    update_cache: yes
+
+- name: download wordpress
+  ansible.builtin.get_url:
+    url: https://wordpress.org/latest.zip
+    dest: /tmp/wordpress.zip
+
+- name: extract wordpress
+  ansible.builtin.unarchive:
+    src: /tmp/wordpress.zip
+    dest: /var/www/html/
+    remote_src: yes
+    creates: /var/www/html/wordpress
+
+- name: Set permissions for WordPress
+  ansible.builtin.file:
+    path: /var/www/html/wordpress
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+- name: Copy wp-config.php template
+  ansible.builtin.template:
+    src: wp-config.php.j2
+    dest: /var/www/html/wordpress/wp-config.php
+    mode: '0644'
+    
+
+
+- name: ensure apache is running
+  ansible.builtin.service:
+    name: apache2
+    state: started
+

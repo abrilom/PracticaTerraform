@@ -1,0 +1,11 @@
+---
+# defaults file for database
+
+mariadb_root_password: "rootpassword"
+
+mariadb_bind_address: "0.0.0.0"
+mariadb_port: 3306
+
+wp_db_name: "wordpress"
+wp_db_user: "wp_user"
+wp_db_password: "wp_pass"

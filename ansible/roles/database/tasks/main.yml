@@ -1,0 +1,49 @@
+# tasks file for database
+#
+- name: install python3 mysql
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: present
+  become: yes
+
+- name: instalar paquetes de mariadb
+  ansible.builtin.apt:
+    name: 
+      - mariadb-server
+      - mariadb-client
+    state: present
+
+- name: asegurar servicio mariadb habilitado
+  ansible.builtin.service:
+    name: mariadb
+    state: started
+
+- name: Configurar el archivo my.cnf
+  ansible.builtin.template:
+    src: my.cnf.j2
+    dest: /etc/mysql/my.cnf
+    mode: 0644
+  notify: restart mariadb
+
+- name: crear base de datos para wp
+  mysql_db:
+    name: "{{ wp_db_name }}"
+    state: present
+    encoding: utf8
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: yes
+
+- name: crear usuarioo wb
+  mysql_user:
+    name: "{{ wp_db_user }}"
+    password: "{{ wp_db_password }}"
+    host: "%"
+    priv: "{{ wp_db_name }}.*:ALL"
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: yes
+
+
+
+
+
