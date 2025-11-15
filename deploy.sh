@@ -4,7 +4,8 @@ set -e
 
 cd terraform 
 
-
+echo "terraform init"
+terraform init
 
 echo "terraform apply"
 terraform apply -auto-approve
