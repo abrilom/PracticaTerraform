@@ -205,7 +205,8 @@ resource "aws_instance" "dbwebserver" {
   instance_type = var.ec2_instance_type
   subnet_id = aws_subnet.public_subnet_2.id
   vpc_security_group_ids = [aws_security_group.db_sg.id]
-  associate_public_ip_address = false
+  associate_public_ip_address = true
+  key_name = aws_key_pair.abril_key.key_name
 
   root_block_device {
     volume_size = var.ec2_volume_size

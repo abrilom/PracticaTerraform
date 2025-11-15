@@ -1,0 +1,13 @@
+- name: database
+  hosts: role_db
+  become: true
+  vars:
+    mariadb_root_password: "wppass"
+    wp_db_name: "wordpress"
+    wp_db_user: "abril_wp"
+    wp_db_password: "abril_password"
+    mariadb_bind_address: "0.0.0.0"
+    db_host: "{{ hostvars[groups['role_db'][0]].private_ip_address }}"
+
+  roles:
+    - database

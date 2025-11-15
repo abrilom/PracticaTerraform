@@ -9,7 +9,7 @@ cd terraform
 echo "terraform apply"
 terraform apply -auto-approve
 
-echo "making EC2 instances"
+echo "Mostrar las ips de las instancias"
 IPS=$(terraform output -json public_ips | jq -r '.[]')
 
 echo "buscando ips de las instancias"
@@ -17,7 +17,10 @@ echo "$IPS"
 
 cd ..
 cd ansible
-echo "ansible-playbook"
+echo "ansible-playbook webserver"
 ansible-playbook site.yml -i aws_ec2.yml
+
+echo "ansible-playbook database"
+ansible-playbook site2.yml -i aws_ec2.yml
 
 echo "Terminado satisfactoriamente"
