@@ -16,6 +16,9 @@ IPS=$(terraform output -json public_ips | jq -r '.[]')
 echo "buscando ips de las instancias"
 echo "$IPS"
 
+echo "esperar a que se creen las instancias"
+sleep 10
+
 cd ..
 cd ansible
 echo "ansible-playbook webserver"
