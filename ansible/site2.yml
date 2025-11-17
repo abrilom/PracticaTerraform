@@ -4,8 +4,8 @@
   vars:
     mariadb_root_password: "wppass"
     wp_db_name: "wordpress"
-    wp_db_user: "abril_wp"
-    wp_db_password: "abril_password"
+    wp_db_user: "wp_user"
+    wp_db_password: "wp_pass"
     mariadb_bind_address: "0.0.0.0"
     db_host: "{{ hostvars[groups['role_db'][0]].private_ip_address }}"
 
